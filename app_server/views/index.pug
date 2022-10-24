@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  .col-12.headBar Revolt
+  
+  .col-3.center
+    form
+     .form-group
+       label(for='username') Username
+       input#username.form-control(name='username', type='text', required='required')
+     .form-group
+       label(for='password') Password
+       input#password.form-control(name='password', type='password', required='required')
+     .form-group
+       a(href='/dashboard')
+        button.btn.btn-primary(name='submit', type='button', href='/dashboard') Login
+       div Not Signed Up? 
+        a(href='/signup') Sign Up
+

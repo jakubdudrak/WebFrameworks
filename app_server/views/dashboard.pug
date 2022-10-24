@@ -1,0 +1,44 @@
+extends layout
+
+block content
+
+  .col-12.headBar Revolt
+  .row.margin
+    .col-md-3
+      .accBox(style='margin-bottom: 0.24em')
+        .row
+          .col-7
+            #name #{name}
+            #balance Balance: $#{balance}
+          .col-3    
+            img.rounded-circle.imgfluid(src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp", style="width:6em; height:auto;",alt="Avatar")
+      .topBox
+        p Top Up
+        input.textLine(name='topUps', type='text')
+        p.sendBtn Add to Account
+      .margin.row 
+      a(href='/') Sign Out
+
+    .col-md-9
+      .row.dash
+        each contact in contacts
+          .col-md-4
+            .card.contact
+              h5.card-header
+                  p #{contact.name}
+              .card-body
+                p.card-text
+                  img.rounded-circle.img-fluid(src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp", style="width:6em;",alt="Avatar")
+              .card-footer.sendBtn
+                  | Send Money
+
+        .col-md-4
+          .card.contact
+            h5.card-header
+              | Add A Contact
+            .card-body
+              p.card-text
+                img.rounded-circle.img-fluid(src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png?w=360", style="width:6em; height: 6em;" ,alt="Avatar")
+            .card-footer.sendBtn
+              | Add A Contact
+        
