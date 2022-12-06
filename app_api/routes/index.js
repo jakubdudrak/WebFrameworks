@@ -8,8 +8,8 @@ router
   .route('/dashboard')
   .get(ctrlDashboard.render)
 
-  router
+router
   .route('/')
-  .get(ctrlLogin.render)
+  .get(ctrlLogin._renderHomepage)
 
 module.exports = router;

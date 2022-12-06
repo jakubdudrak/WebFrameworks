@@ -1,8 +1,10 @@
-const render = function (req, res) {
-    res.render('index', { title: 'Express' });
-   };
+
+const _renderHomepage = function(req, res, responseBody){ 
+    res.render('index', {
+    title: 'Revolt'});
+    };
   
   
   module.exports = {
-    render
+    _renderHomepage
   };

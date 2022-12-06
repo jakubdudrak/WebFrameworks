@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let dbURI = 'mongodb+srv://jakub:dad6d6Rbxc?t@cluster0.wkxlknd.mongodb.net/?retryWrites=true&w=majority';
+let dbURI = 'mongodb+srv://jakub:dad6d6Rbxc?t@cluster0.wkxlknd.mongodb.net/RevoltApp?retryWrites=true&w=majority';
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGODB_URI;
 }
@@ -41,4 +41,5 @@ process.on('SIGTERM', () => {
   });
 });
 
-require('./locations');
+require('./account');
+require('./contact');
