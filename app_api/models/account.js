@@ -27,6 +27,5 @@ const contactSchema = new mongoose.Schema({
   contacts: [accountSchema]
 });
 
-mongoose.model('Contact', contactSchema);
-
-mongoose.model('Account', accountSchema);
+mongoose.model('Contacts', contactSchema);
+mongoose.model('Accounts', accountSchema);

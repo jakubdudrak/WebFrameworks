@@ -1,8 +1,8 @@
 const request = require('request');
 const mongoose = require('mongoose');
 require('../models/account');
-const Acc = mongoose.model('Account');
-const Con = mongoose.model('Contact');
+const Acc = mongoose.model('Accounts');
+const Con = mongoose.model('Contacts');
 
 const apiOptions = { 
     server : 'http://localhost:3000' 
@@ -27,26 +27,15 @@ const homelist = function(req, res){
 
 };
 
-
-
-    
-const checkContactsNull = function(contacts){
-  //if (contacts)
-}
-
-
 const _renderDash = function (req, res) {
-  let accountDetails
-  Acc.findOne({'accountid': '0'}, (err, account) => {
-    if (err) console.log(err);
-    accountDetails = account;
-  })
-  let contactDetails
-  Con.findOne({'accountid': '0'}, (err, contact) => {
-    if (err) console.log(err);
-    contactDetails = contact;
-  });
-  console.log(accountDetails);
+  let accountDetails =
+    Acc.where('accountID').equals('0').exec((err, account) => 
+    {if (err) console.log(err);});
+  
+  let contactDetails = 
+    Con.where('accountID').equals('0').exec((err, contacts) => {if (err) console.log(err);});
+
+  console.log(accountDetails + "Hello");
   console.log(contactDetails);
   res.render('dashboard', { title: 'Express', 'name': accountDetails.name, 'profilePicture': accountDetails.profilePicture, 'contacts': contactDetails });
  };
