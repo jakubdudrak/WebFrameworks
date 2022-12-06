@@ -1,8 +1,7 @@
 const request = require('request');
-const mongoose = require('mongoose');
+const mongoose = require('../models/db');
 require('../models/account');
 const Acc = mongoose.model('Accounts');
-const Con = mongoose.model('Contacts');
 
 const apiOptions = { 
     server : 'http://localhost:3000' 
@@ -13,11 +12,14 @@ if (process.env.NODE_ENV === 'production') {
     }
 
 const homelist = function(req, res){
-    const path = '/api/main'; 
+    const path = '/api/dashboard/:id'; 
     const requestOptions = { 
     url : apiOptions.server + path, 
     method : 'GET', 
-    json : {}, 
+    json : {},
+    qs : {
+        account: 'Jakub'
+        } 
     }; 
 
     request(requestOptions, (err, response, body) => { 
@@ -27,20 +29,46 @@ const homelist = function(req, res){
 
 };
 
-const _renderDash = function (req, res) {
-  let accountDetails =
-    Acc.where('accountID').equals('0').exec((err, account) => 
-    {if (err) console.log(err);});
-  
-  let contactDetails = 
-    Con.where('accountID').equals('0').exec((err, contacts) => {if (err) console.log(err);});
 
-  console.log(accountDetails + "Hello");
-  console.log(contactDetails);
-  res.render('dashboard', { title: 'Express', 'name': accountDetails.name, 'profilePicture': accountDetails.profilePicture, 'contacts': contactDetails });
+const getAccount = async function (req, res) {
+  let accountGet;
+  let contact;
+  if (req.params && req.params.id) {
+      await Acc
+      .findOne({'accountID': req.params.id})
+      .exec((err, account) => {
+        if (!account) {
+          res	
+            .status(404) 
+            .json({	
+              "message": "user not found"
+            });	 
+          return;
+        } else if (err) {
+          res	
+            .status(404) 
+            .json(err); 
+          return; 	
+        }
+        res	
+            .status(200) 
+            .json(account); 
+      });
+  } else {		
+    return res		
+      .status(404) 	
+      .json({	
+        "message": "No id in request"
+      });		
+  }
+ };
+
+ const _renderDash = function(req, res, body){
+    res.render('dashboard', { title: 'Revolt', account: body });
  };
 
 
+
 module.exports = {
-  _renderDash
+  getAccount
 };

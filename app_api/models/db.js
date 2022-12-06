@@ -1,44 +1,15 @@
 const mongoose = require('mongoose');
-let dbURI = 'mongodb+srv://jakub:dad6d6Rbxc?t@cluster0.wkxlknd.mongodb.net/RevoltApp?retryWrites=true&w=majority';
-if (process.env.NODE_ENV === 'production') {
-  dbURI = process.env.MONGODB_URI;
-}
-mongoose.connect(dbURI);
+let dbURI = 'mongodb+srv://mongodb:mongodb@cluster0.wkxlknd.mongodb.net/RevoltApp?retryWrites=true&w=majority';
+ 
+mongoose.connect(dbURI,
+    function(err) {
+     if (err) {
+       console.log(err);
+     } else {
+       console.info('connected');
+     }
+    }
+);
 
-mongoose.connection.on('connected', () => {
-  console.log(`Mongoose connected to ${dbURI}`);
-});
-mongoose.connection.on('error', err => {
-  console.log('Mongoose connection error:', err);
-});
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected');
-});
-
-const gracefulShutdown = (msg, callback) => {
-  mongoose.connection.close( () => {
-    console.log(`Mongoose disconnected through ${msg}`);
-    callback();
-  });
-};
-
-// For nodemon restarts                                 
-process.once('SIGUSR2', () => {
-  gracefulShutdown('nodemon restart', () => {
-    process.kill(process.pid, 'SIGUSR2');
-  });
-});
-// For app termination
-process.on('SIGINT', () => {
-  gracefulShutdown('app termination', () => {
-    process.exit(0);
-  });
-});
-// For Heroku app termination
-process.on('SIGTERM', () => {
-  gracefulShutdown('Heroku app shutdown', () => {
-    process.exit(0);
-  });
-});
-
+module.exports = mongoose;
 require('./account');

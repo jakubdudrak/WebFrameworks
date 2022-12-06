@@ -7,8 +7,8 @@ block content
       .accBox(style='margin-bottom: 0.24em')
         .row
           .col-7
-            #name #{name}
-            #balance Balance: $#{balance}
+            #name #{account.name}
+            #balance Balance: $#{account.balance}
           .col-3    
             img.rounded-circle.imgfluid(src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp", style="width:6em; height:auto;",alt="Avatar")
       .topBox
@@ -17,10 +17,9 @@ block content
         p.sendBtn Add to Account
       .margin.row 
       a(href='/') Sign Out
-
     .col-md-9
       .row.dash
-        each contact in contacts
+        each contact in account.contacts
           .col-md-4
             .card.contact
               h5.card-header

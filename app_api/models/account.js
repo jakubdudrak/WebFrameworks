@@ -16,16 +16,16 @@ const accountSchema = new mongoose.Schema({
   balance: {
       type: Number,
       required: true
-  }
-});
-
-const contactSchema = new mongoose.Schema({
-  accountID: {
-      type: Number,
-      required: true
   },
-  contacts: [accountSchema]
+  contacts: [{
+    name:{required: true, type: String},
+    profilePicture: {data: Buffer, dataType: String},
+    accountID: {required: true, type: Number},
+    balance: {required: true, type: Number}
+  }]
 });
 
-mongoose.model('Contacts', contactSchema);
-mongoose.model('Accounts', accountSchema);
+
+
+
+mongoose.model('Accounts', accountSchema, 'accounts');
