@@ -1,4 +1,4 @@
-/* GET home page */
+const request = require('request');
 const dashboard = function(req, res){
   res.render('dashboard', { 
     name: "Jakub Dudrak",
