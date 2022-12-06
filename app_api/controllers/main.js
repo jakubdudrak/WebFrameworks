@@ -67,8 +67,66 @@ const getAccount = async function (req, res) {
     res.render('dashboard', { title: 'Revolt', account: body });
  };
 
+const sendMoney = async function(req, res){
+    let amount = req.body.amount;
+    let receiver = req.body.contactID;
+    let sender = req.body.senderID;
 
+    await Acc.findOne({accountID: sender})
+    .exec((err, account) => {
+        if (!account) {
+          res	
+            .status(404) 
+            .json({	
+              "message": "user not found"
+            });	 
+          return;
+        } else if (err) {
+          res	
+            .status(404) 
+            .json(err); 
+          return; 	
+        }
+        if(account.balance < amount){
+            res	
+            .status(404) 
+            .json({	
+              "message": "not enough money"
+            });	 
+          return;
+        } else {
+            account.balance -= amount;
+            account.save();
+        }
+    });
+  }
+
+const addContact = async function(req, res){
+
+    await Acc.findOne({accountID: req.username})
+    .exec((err, account) => {
+        if (!account) {
+          res	
+            .status(404) 
+            .json({	
+              "message": "user not found"
+            });	 
+          return;
+        } else if (err) {
+          res	
+            .status(404) 
+            .json(err); 
+          return; 	
+        }
+        res	
+            .status(200) 
+            .json(account);
+    });
+}
 
 module.exports = {
-  getAccount
+  sendMoney,
+  addContact,
+  getAccount,
+  sendMoney
 };

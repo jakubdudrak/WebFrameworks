@@ -2,7 +2,7 @@ extends layout
 
 block content
   .col-3.center
-    form
+    form(action="/createAccount", method="post") 
       .form-group
         label(for='username') Username
         input#username.form-control(name='username', type='text', required='required')
@@ -10,8 +10,11 @@ block content
         label(for='password') Password
         input#password.form-control(name='password', type='password', required='required')
       .form-group
-        label(for='text') Re-enter Password
-        input#text.form-control(name='text', type='password', required='required')
+        label(for='text') Full Name
+        input#text.form-control(name='text', type='text', required='required')
+      .form-group
+        label(for='url') Link to Profile Picture
+        input#text.form-control(name='url', type='text', required='required')
       .form-group
         button.btn.btn-primary(name='submit', type='submit') Login
         p Already Signed Up? 

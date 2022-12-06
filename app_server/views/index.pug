@@ -3,7 +3,7 @@ extends layout
 block content
   
   .col-3.center
-    form
+    form(action="/login", method="post") 
      .form-group
        label(for='username') Username
        input#username.form-control(name='username', type='text', required='required')
@@ -11,7 +11,7 @@ block content
        label(for='password') Password
        input#password.form-control(name='password', type='password', required='required')
      .form-group
-       a(href='/dashboard')
-        button.btn.btn-primary(name='submit', type='button', href='/dashboard') Login
+       div 
+        button.btn.btn-primary(name='submit', type='submit') Login
        div Not Signed Up? 
         a(href='/signup') Sign Up

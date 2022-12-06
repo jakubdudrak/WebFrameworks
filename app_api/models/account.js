@@ -6,20 +6,23 @@ const accountSchema = new mongoose.Schema({
     required: true
   },
   profilePicture: {
-    data: Buffer,
-    dataType: String
+    type: String
   },
   accountID: {
-      type: Number,
+      type: String,
       required: true
   },
   balance: {
       type: Number,
       required: true
   },
+  password: {
+      type: String,
+      required: true
+  },
   contacts: [{
     name:{required: true, type: String},
-    profilePicture: {data: Buffer, dataType: String},
+    profilePicture: {type: String},
     accountID: {required: true, type: Number},
     balance: {required: true, type: Number}
   }]
