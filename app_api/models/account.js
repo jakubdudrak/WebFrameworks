@@ -19,4 +19,14 @@ const accountSchema = new mongoose.Schema({
   }
 });
 
+const contactSchema = new mongoose.Schema({
+  accountID: {
+      type: Number,
+      required: true
+  },
+  contacts: [accountSchema]
+});
+
+mongoose.model('Contact', contactSchema);
+
 mongoose.model('Account', accountSchema);

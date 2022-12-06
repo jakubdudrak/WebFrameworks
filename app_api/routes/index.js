@@ -6,7 +6,7 @@ const ctrlLogin = require('../controllers/login');
 
 router
   .route('/dashboard')
-  .get(ctrlDashboard.render)
+  .get(ctrlDashboard._renderDash)
 
 router
   .route('/')

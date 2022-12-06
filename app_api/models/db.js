@@ -42,4 +42,3 @@ process.on('SIGTERM', () => {
 });
 
 require('./account');
-require('./contact');
