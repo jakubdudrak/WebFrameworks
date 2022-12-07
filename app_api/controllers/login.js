@@ -18,6 +18,9 @@ const loginValid = function(req, res){
                 res.render('index', {title: 'Revolt', error: 'Incorrect Password'});
             }
         }
+        else {
+            res.render('index', {title: 'Revolt', error: 'Account does not exist'});
+        }
     });
 };
   
