@@ -12,9 +12,14 @@ block content
           .col-3    
             img.rounded-circle.imgfluid(src=account.profilePicture, style="width:6em; height:auto;",alt="Avatar")
       .topBox
-        p Top Up
-        input.textLine(name='topUps', type='text')
-        p.sendBtn Add to Account
+        form(action="/topUp", method="post") 
+          p Top Up
+          .col-md-12
+            .row
+              input(type="hidden", name="accid", value=account.accountID)
+              input.textLine(name='topUps', type='number', style="width: 100%;", required='required')
+            .row.margin
+              input(type="submit", value="Top Up", class="btn btn-primary")
       .margin.row 
       a(href='/') Sign Out
     .col-md-9
@@ -23,18 +28,19 @@ block content
           .col-md-4
             .card.contact
               h5.card-header
-                  p #{contact.accountID}
+                  p #{contact.name}
               .card-body
                 p.card-text
-                  img.rounded-circle.img-fluid(src=contact.profilePicture, style="width:6em;",alt="Avatar")
+                  img.rounded-circle.img-fluid(src=contact.profilePicture, style="width:6em; height:6em;",alt="Avatar")
                   form(action="/sendMoney", method="post") 
-                    .form-group
-                      input(type="hidden", name="contactID", value=contact.accountID)
-                      input(type="hidden", name="senderID", value=account.accountID)
-                      label(for='amount') Amount
-                      input#amount.form-control(name='amount', type='number', required='required')
-                    .form-group
-                      input(type="submit", value="Send", class="btn btn-primary")
+                    .col-md-12
+                      .form-group
+                        input(type="hidden", name="contactID", value=contact.accountID)
+                        input(type="hidden", name="senderID", value=account.accountID)
+                        label(for='amount') Amount
+                        input#amount.form-control(name='amount', type='number', required='required')
+                      .form-group
+                        input(type="submit", value="Send", class="btn btn-primary")
         .col-md-4
           .card.contact
             h5.card-header
@@ -43,6 +49,7 @@ block content
               p.card-text
                 form(action="/addContact", method="post") 
                   .form-group
+                    input(type="hidden", name="accid", value=account.accountID)
                     label(for='username') Username
                     input#username.form-control(name='username', type='text', required='required')
                   .form-group

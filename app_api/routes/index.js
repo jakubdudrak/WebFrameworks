@@ -23,6 +23,8 @@ router
 router.get('/signup', ctrlSignup._renderSignup);
 router.post('/createAccount', ctrlSignup.signup);
 router.post('/sendMoney', ctrlDashboard.sendMoney);
+router.post('/topUp', ctrlDashboard.topUp);
+router.post('/addContact', ctrlDashboard.addContact);
 
 router.post('/login', ctrlLogin.loginValid);
 

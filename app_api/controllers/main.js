@@ -67,66 +67,55 @@ const getAccount = async function (req, res) {
     res.render('dashboard', { title: 'Revolt', account: body });
  };
 
-const sendMoney = async function(req, res){
+const topUp = function(req, res){
+  let amount = req.body.topUps;
+  let username = req.body.accid
+  Acc.findOneAndUpdate({accountID: username}, {$inc: {balance: amount}}, {new: false}, (err, account) => {
+    if (err) 
+      return res.status(500).send(err);  
+    account.save();
+    res.redirect('/dashboard/' + account.accountID);
+  });
+
+}
+
+const sendMoney = function(req, res){
     let amount = req.body.amount;
     let receiver = req.body.contactID;
     let sender = req.body.senderID;
 
-    await Acc.findOne({accountID: sender})
-    .exec((err, account) => {
-        if (!account) {
-          res	
-            .status(404) 
-            .json({	
-              "message": "user not found"
-            });	 
-          return;
-        } else if (err) {
-          res	
-            .status(404) 
-            .json(err); 
-          return; 	
-        }
+    Acc.findOneAndUpdate({accountID: sender}, {$inc: {balance: -amount}}, {new: false}, (err, account) => {
+        if (err) 
+          return res.status(500).send(err);
         if(account.balance < amount){
-            res	
-            .status(404) 
-            .json({	
-              "message": "not enough money"
-            });	 
           return;
-        } else {
-            account.balance -= amount;
-            account.save();
         }
-    });
+        account.save();
+    }
+    );
+    Acc.findOneAndUpdate({accountID: receiver}, {$inc: {balance: amount}}, {new: false}, (err, account) => {
+      if (err) 
+        return res.status(500).send(err);
+      account.save();
   }
-
-const addContact = async function(req, res){
-
-    await Acc.findOne({accountID: req.username})
-    .exec((err, account) => {
-        if (!account) {
-          res	
-            .status(404) 
-            .json({	
-              "message": "user not found"
-            });	 
-          return;
-        } else if (err) {
-          res	
-            .status(404) 
-            .json(err); 
-          return; 	
-        }
-        res	
-            .status(200) 
-            .json(account);
-    });
+  );
+  res.redirect('/dashboard/' + sender);
+}
+const addContact = function(req, res){
+  let contact = req.body.username;
+  let username = req.body.accid;
+  Acc.findOne({accountID: username}, (err, account) => {
+    if (err) 
+      return res.status(500).send(err);
+    account.contacts.push(contact);
+    account.save();
+});
 }
 
 module.exports = {
   sendMoney,
   addContact,
   getAccount,
-  sendMoney
-};
+  sendMoney,
+  topUp
+}
